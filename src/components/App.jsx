@@ -1,16 +1,22 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+import React from "react";
+import { Component } from "react";
+import Searchbar from "./Searchbar";
+
+export class App extends Component {
+
+state = {
+
+}
+
+render() {
+
+  return(
+    <div>
+      <Searchbar>
+
+      </Searchbar>
     </div>
-  );
-};
+  )
+}
+
+}
