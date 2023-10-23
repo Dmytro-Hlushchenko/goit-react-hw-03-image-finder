@@ -1,3 +1,4 @@
+import styles from 'styles.module.css'
 import {Formik, Field, Form} from 'formik'
 
 export default function Searchbar ({onSearchBtn}) {
@@ -9,7 +10,7 @@ export default function Searchbar ({onSearchBtn}) {
 
           onSubmit={values => {onSearchBtn(values.search)}}
         >
-          <Form>
+          <Form className={styles.Searchbar}>
              <header className="searchbar">
                   <button type="submit" className="button">
                     <span className="button-label">Search</span>

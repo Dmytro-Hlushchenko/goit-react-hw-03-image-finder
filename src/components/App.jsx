@@ -4,6 +4,7 @@ import { Component } from "react";
 import Searchbar from "./Searchbar";
 import ImageGallery from "./ImageGallery";
 import { getPictures } from "API";
+import  Button  from "./Button";
 
 
 export class App extends Component {
@@ -45,7 +46,12 @@ async componentDidUpdate(prevProps, prevState){
       
         if (prevState.search !== this.state.search) {
           try {
-           const pictures = await getPictures(this.state.search);
+            this.setState ({
+              loading: true,
+              error:false,
+            });
+      
+            const pictures = await getPictures(this.state.search);
             this.setState({
               pictures: pictures.hits,
               loading: false,
@@ -62,6 +68,7 @@ async componentDidUpdate(prevProps, prevState){
               this.setState({loading: false})
             }
         }
+   
   }
 
 onSubmit = evt => {
@@ -82,6 +89,9 @@ render() {
         {error && <b>Errore..try reload page.....</b>}
         <ImageGallery pictures = {this.state.pictures}>
         </ImageGallery>
+        <Button>
+
+        </Button>
 
       </div>
     )
