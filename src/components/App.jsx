@@ -7,6 +7,33 @@ import { getPictures } from "API";
 import  Button  from "./Button";
 
 
+//Button :
+
+//-При натисканні на кнопку Load more повинна довантажуватись
+//наступна порція зображень і рендеритися разом із попередніми.
+
+//-Кнопка повинна рендеритися лише тоді, коли є якісь завантажені зображення.
+
+//-Якщо масив зображень порожній, кнопка не рендериться.
+
+//Loader:
+//-Компонент спінера відображається, доки відбувається завантаження зображень.
+//Використовуйте будь-який готовий компонент, наприклад react-loader-spinner
+// або будь-який інший.
+
+//Modal:
+//-Під час кліку на елемент галереї повинно відкриватися модальне вікно
+// з темним оверлеєм і відображатися велика версія зображення.
+
+//-Модальне вікно повинно закриватися по натисканню клавіші ESC
+//або по кліку на оверлеї.
+
+//Зовнішній вигляд схожий на функціонал цього VanillaJS-плагіна, 
+//тільки замість білого модального вікна рендериться зображення
+// (у прикладі натисніть Run). Анімацію робити не потрібно!
+
+
+
 export class App extends Component {
 
 state = {
@@ -14,7 +41,7 @@ state = {
   pictures: [],
   loading: true,
   search:'',
-  page:''
+  page: 0,
 }
 
 async componentDidMount() {
@@ -44,7 +71,8 @@ async componentDidMount() {
 
 async componentDidUpdate(prevProps, prevState){
       
-        if (prevState.search !== this.state.search) {
+        if (prevState.search !== this.state.search || 
+            prevState.page !== this.state.page) {
           try {
             this.setState ({
               loading: true,
@@ -68,14 +96,24 @@ async componentDidUpdate(prevProps, prevState){
               this.setState({loading: false})
             }
         }
-   
-  }
+      }
 
 onSubmit = evt => {
       this.setState({
       search: evt,
+      page:1,
   });
   };
+
+onLoadMore = () => {
+  this.setState(prevState => ({
+    page: prevState.page + 1,
+    isLoading: true,
+  }));
+
+  console.log("ascasc")
+  console.log(this.state)
+}
 
 
 render() {
@@ -83,13 +121,16 @@ render() {
 
     return(
       <div className={styles.App}>
-        <Searchbar onSearchBtn = {this.onSubmit}>
+        <Searchbar 
+          onSearchBtn = {this.onSubmit}>
         </Searchbar>
         {loading && <b>Loading.........</b>}
         {error && <b>Errore..try reload page.....</b>}
         <ImageGallery pictures = {this.state.pictures}>
         </ImageGallery>
-        <Button>
+        <Button
+          onClick={this.onLoadMore}       
+        >
 
         </Button>
 

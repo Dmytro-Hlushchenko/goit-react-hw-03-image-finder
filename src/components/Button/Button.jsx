@@ -1,6 +1,8 @@
 
-export default function Button(){
+
+export default function Button({onClick}){
+
     return(
-        <button>LoadMore</button>
+        <button onClick={onClick}>LoadMore</button>
     )
 }
