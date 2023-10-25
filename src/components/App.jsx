@@ -5,11 +5,7 @@ import Searchbar from "./Searchbar";
 import ImageGallery from "./ImageGallery";
 import { getPictures } from "API";
 import  Button  from "./Button";
-
-//Loader:
-//-Компонент спінера відображається, доки відбувається завантаження зображень.
-//Використовуйте будь-який готовий компонент, наприклад react-loader-spinner
-// або будь-який інший.
+import Loader from './Loader';
 
 //Modal:
 //-Під час кліку на елемент галереї повинно відкриватися модальне вікно
@@ -63,6 +59,12 @@ async componentDidUpdate(prevProps, prevState){
             prevState.page !== this.state.page) {
          
           try {
+
+            this.setState ({
+              loading: true,
+              error:false,
+            });
+
            const pictures = await getPictures(
               this.state.search,
               this.state.page
@@ -118,7 +120,8 @@ render() {
         <Searchbar 
           onSearchBtn = {this.onSubmit}>
         </Searchbar>
-          {loading && <b>Loading.........</b>}
+
+          {loading &&<Loader></Loader> }
           {error && <b>Errore..try reload page.....</b>}
         
         <ImageGallery 
