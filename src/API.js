@@ -14,7 +14,7 @@ export const getPictures = async (search, page) => {
         image_type: 'photo',
         photo: 'horizontal',
         safesearch: 'true',
-        page: `, page}`,
+        page: `${page}`,
         per_page: 12,
       },
     };

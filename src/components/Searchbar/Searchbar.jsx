@@ -5,10 +5,11 @@ export default function Searchbar ({onSearchBtn}) {
       return (
         <Formik
           initialValues={{
-            search:''
+            search:'',
           }}
 
-          onSubmit={values => {onSearchBtn(values.search)}}
+          onSubmit={(values, actions) => {
+            onSearchBtn(values.search)}}
         >
           <Form className={styles.Searchbar}>
              <header className="searchbar">
