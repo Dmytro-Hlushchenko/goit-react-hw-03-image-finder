@@ -1,1 +1,1 @@
-export {default} from './Modal.jsx'
+export { ImageModal } from './Modal.jsx'

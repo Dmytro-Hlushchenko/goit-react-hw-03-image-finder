@@ -7,16 +7,6 @@ import { getPictures } from "API";
 import  Button  from "./Button";
 import Loader from './Loader';
 
-//Modal:
-//-Під час кліку на елемент галереї повинно відкриватися модальне вікно
-// з темним оверлеєм і відображатися велика версія зображення.
-
-//-Модальне вікно повинно закриватися по натисканню клавіші ESC
-//або по кліку на оверлеї.
-
-//Зовнішній вигляд схожий на функціонал цього VanillaJS-плагіна, 
-//тільки замість білого модального вікна рендериться зображення
-// (у прикладі натисніть Run). Анімацію робити не потрібно!
 
 export class App extends Component {
 
@@ -93,7 +83,6 @@ onSubmit = evt => {
       pictures: [],
       page:1,
   });
-  console.log(this.state)
   };
 
   
@@ -102,15 +91,7 @@ onLoadMore = () => {
     page: prevState.page + 1,
     isLoading: true,
   }));
-
-  console.log("ascasc")
-  console.log(this.state)
 }
-
-onImgClick = (picture) => {
-  console.dir(picture)
-}
-
 
 render() {
   const {loading, error} = this.state;
@@ -125,7 +106,8 @@ render() {
           {error && <b>Errore..try reload page.....</b>}
         
         <ImageGallery 
-          pictures = {this.state.pictures}>
+          pictures = {this.state.pictures}
+        >
         </ImageGallery>
         {this.state.pictures.length > 11 && (
           
