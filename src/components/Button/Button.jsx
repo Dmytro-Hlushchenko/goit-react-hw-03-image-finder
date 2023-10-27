@@ -1,5 +1,5 @@
 import React from "react";
-import styles from 'styles.module.css'
+import styles from 'styles.module.css';
 
 export default function Button({onClick}){
         return(
@@ -7,4 +7,4 @@ export default function Button({onClick}){
         className={styles.Button}
         onClick={onClick}>LoadMore</button>
     )
-}
+};

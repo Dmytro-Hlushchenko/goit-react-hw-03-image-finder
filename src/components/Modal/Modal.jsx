@@ -18,19 +18,14 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export class ImageModal extends Component {
-  onModalCLose = e => {
-    if (e.target === e.currentTarget) {
-      this.props.isCloseModal();
-    }
-  };
-
+  
   render() {
-    const { isOpenModal, tags, largeImg } = this.props;
+    const { isOpenModal, tags, largeImg, isCloseModal } = this.props;
     return (
       <>
         <Modal
           isOpen={isOpenModal}
-          onRequestClose={this.onModalCLose}
+          onRequestClose={isCloseModal}
           style={customStyles}
           contentLabel="Example Modal"
         >

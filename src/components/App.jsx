@@ -13,73 +13,43 @@ export class App extends Component {
 state = {
   errore: false,
   pictures: [],
-  loading: true,
+  isLoading: false,
+  loadMore: false,
   search:'',
   page: 1,
 }
-
-async componentDidMount() {
-    try {
-      this.setState ({
-        loading: true,
-        error:false,
-      });
-
-      const pictures = await getPictures(this.state.search);
-      this.setState({
-        pictures: pictures.hits,
-        loading: false,
-      });
-
-    } catch(error) {
-      this.setState({
-        error: true,
-        loading: false,
-      });
-    }
-    
-    finally {
-        this.setState({loading: false})
-      }
-  };
 
 async componentDidUpdate(prevProps, prevState){
       
         if (prevState.search !== this.state.search || 
             prevState.page !== this.state.page) {
-         
+          this.setState({isLoading: true})
+          
+          const {page, search} = this.state
+
           try {
-
-            this.setState ({
-              loading: true,
-              error:false,
-            });
-
-           const pictures = await getPictures(
-              this.state.search,
-              this.state.page
-              );
+          const pictures = await getPictures(search, page);
+            
             this.setState(prevState => ({
               pictures: [...prevState.pictures, ...pictures.hits],
-              loading: false,
+              loadMore: page < Math.ceil(pictures.totalHits / 12),
             }));
       
           } catch(error) {
             this.setState({
               error: true,
-              loading: false,
             });
           }
           
           finally {
-              this.setState({loading: false})
+              this.setState({isLoading: false})
             }
         }
       }
 
-onSubmit = evt => {
+onSubmit = query => {
       this.setState({
-      search: evt,
+      search: query ,
       pictures: [],
       page:1,
   });
@@ -89,12 +59,11 @@ onSubmit = evt => {
 onLoadMore = () => {
   this.setState(prevState => ({
     page: prevState.page + 1,
-    isLoading: true,
   }));
 }
 
 render() {
-  const {loading, error} = this.state;
+  const {isLoading, error, loadMore} = this.state;
 
     return(
       <div className={styles.App}>
@@ -102,20 +71,20 @@ render() {
           onSearchBtn = {this.onSubmit}>
         </Searchbar>
 
-          {loading &&<Loader></Loader> }
+          {isLoading &&<Loader></Loader> }
           {error && <b>Errore..try reload page.....</b>}
         
         <ImageGallery 
           pictures = {this.state.pictures}
         >
         </ImageGallery>
-        {this.state.pictures.length > 11 && (
-          
+
+        {loadMore && (
           <Button
             onClick={this.onLoadMore}>
           </Button>
         )}       
       </div>
-    )
+    ) 
   }
-}
+};
